@@ -3,6 +3,9 @@
 const storage = Symbol();
 
 function YetAnotherSet(iterator = []) {
+	if (typeof iterator?.[Symbol.iterator] !== "function")
+		throw new Error("Iterator is not iterable");
+
 	if (!new.target) return new YetAnotherSet(iterator);
 
 	this[storage] = [];
@@ -22,15 +25,13 @@ YetAnotherSet.prototype.toString = function () {
 
 YetAnotherSet.prototype[Symbol.toStringTag] = "^_^";
 
-YetAnotherSet.prototype[Symbol.iterator] = function* () {
-	for (const item of this[storage]) yield item;
+YetAnotherSet.prototype[Symbol.iterator] = function () {
+	return this[storage][Symbol.iterator]();
+	// for (const item of this[storage]) yield item;
 };
 
 YetAnotherSet.prototype.has = function (value) {
-	for (const item of this[storage]) {
-		if (Object.is(item, value)) return true;
-	}
-	return false;
+	return this[storage].includes(value);
 };
 
 YetAnotherSet.prototype.add = function (value) {
@@ -72,6 +73,7 @@ Object.defineProperties(YetAnotherSet.prototype, {
 		get: function () {
 			return this[storage].length;
 		},
+		configurable: false,
 		enumerable: false,
 	},
 });
