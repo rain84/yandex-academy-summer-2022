@@ -136,7 +136,7 @@ set.forEach(
 array = [4, 8, 15, 16, 23, 42];
 set = YetAnotherSet(array);
 
-const keys = [...array];
+const keys = [...array.keys()];
 for (const item of set.keys()) {
 	console.assert(item === keys.shift(), "for-of keys");
 }
@@ -146,8 +146,8 @@ for (const item of set.values()) {
 	console.assert(item === values.shift(), "for-of values");
 }
 
-const entries = [...array];
+const entries = [...array.entries()];
 for (const [key, value] of set.entries()) {
 	const elem = entries.shift();
-	console.assert(key === elem && value === elem, "for-of entries");
+	console.assert(key === elem[0] && value === elem[1], "for-of entries");
 }
