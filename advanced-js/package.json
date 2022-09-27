@@ -1,7 +1,10 @@
 {
-    "type": "commonjs",
-    "main": "playground.js",
-    "devDependencies": {
-        "nodemon": "^2.0.20"
-    }
+  "type": "commonjs",
+  "main": "playground.js",
+  "scripts": {
+    "start": "nodemon playground.js"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
 }
